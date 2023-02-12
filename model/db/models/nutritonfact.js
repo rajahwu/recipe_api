@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      NutritonFact.belongsTo(models.Ingredient)
     }
   }
   NutritonFact.init({
@@ -19,7 +20,10 @@ module.exports = (sequelize, DataTypes) => {
     carbs: DataTypes.FLOAT,
     protein: DataTypes.FLOAT,
     carbs: DataTypes.FLOAT,
-    ingredientId: DataTypes.INTEGER
+    ingredientId: {
+      type: DataTypes.INTEGER,
+      references: { model: Ingredient }
+    }
   }, {
     sequelize,
     modelName: 'NutritonFact',

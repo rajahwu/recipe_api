@@ -11,11 +11,22 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Ingredient.belongsTo(models.Food)
+      Ingredient.hasOne(models.NutritonFact, { foreignKey: 'ingredientId' })
+      Ingredient.hasMany(models.RecipeIngredient, { foreignKey: 'ingredientId'})
+      Ingredient.belongsToMany(models.Recipe, {
+        through: 'RecipeIngredient',
+        foreignKey: 'IngredientId',
+        otherKey: 'RecipeId'
+      })
     }
   }
   Ingredient.init({
     name: DataTypes.STRING,
-    foodId: DataTypes.INTEGER
+    foodId: {
+      type: DataTypes.INTEGER,
+      references: { model: Food }
+    }
   }, {
     sequelize,
     modelName: 'Ingredient',

@@ -11,12 +11,26 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      PhotoSize.hasMany(models.Photo, { foreignKey: 'sizeId' })
     }
   }
   PhotoSize.init({
-    name: DataTypes.STRING,
-    width: DataTypes.INTEGER,
-    height: DataTypes.INTEGER
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        isUppercase: true
+      }
+    },
+    width: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    height: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'PhotoSize',

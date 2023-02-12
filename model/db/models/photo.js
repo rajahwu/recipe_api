@@ -11,12 +11,23 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Photo.belongsTo(models.Recipe)
+      Photo.belongsTo(models.PhotoSize)
     }
   }
   Photo.init({
-    url: DataTypes.TEXT,
-    sizeId: DataTypes.INTEGER,
-    recipeId: DataTypes.INTEGER
+    url: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    sizeId: {
+      type: DataTypes.INTEGER,
+      references:{model: 'PhotoSize'}
+    },
+    recipeId: {
+      type: DataTypes.INTEGER,
+      references: { model: 'Recipe' }
+    }
   }, {
     sequelize,
     modelName: 'Photo',

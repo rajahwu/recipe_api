@@ -11,6 +11,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Recipe.belongsTo(models.RecipeType)
+      Recipe.hasMany(models.Like, { foreignKey: 'recipeId' })
+      Recipe.hasMany(models.Review, { foreignKey: 'recipeId' })
+      Recipe.hasMany(models.Photo, { foreignKey: 'recipeId' })
+      Recipe.hasMany(models.RecipeIngredient, { foreignKey: 'recipeId' })
+      Recipe.belongsToMany(models.Ingredient, {
+        through: models.RecipeIngredient, 
+        foreignKey: 'recipeId',
+        otherKey: 'ingredientId'
+      })
     }
   }
   Recipe.init({
@@ -18,7 +28,10 @@ module.exports = (sequelize, DataTypes) => {
     prepTime: DataTypes.FLOAT,
     cookTime: DataTypes.FLOAT,
     instructions: DataTypes.TEXT,
-    recipeTypeId: DataTypes.INTEGER
+    recipeTypeId: {
+      type: DataTypes.INTEGER,
+      references: { model: ' RecipeType'}
+    }
   }, {
     sequelize,
     modelName: 'Recipe',
