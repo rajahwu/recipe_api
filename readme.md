@@ -24,6 +24,8 @@ npm install ejs jquery
 
     npx sequelize model:generate --name Recipe --attributes name:string,prepTime:float,cookTime:float,instructions:text,recipeTypeId:integer
 
+    # creates Table named Food instead of Foods
+    # rename Table to Foods before db:migrate
     npx sequelize model:generate --name Food --attributes name:string
 
     npx sequelize model:generate --name Ingredient --attributes name:string,foodId:integer
