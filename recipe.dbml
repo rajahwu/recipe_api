@@ -1,0 +1,99 @@
+Project Recipe_API {
+    database_type: 'SQLite'
+    Note: '''
+        # Recipe API
+        **Week 11 Project**
+    '''
+}
+
+Table recipe_types {
+    id int [pk, increment]
+    name varchar [not null]
+    created_at datetime [default: `now()`, note: "created time"]
+    updated_at datetime [default: `now()`, note: "updated time"]
+} 
+
+Table recipes {
+    id int [pk, increment]
+    name varchar
+    prep_time float
+    cook_time float
+    instructions text
+    recipe_type_id int [ref: > recipe_types.id]
+    created_at datetime [default: `now()`, note: "created time"]
+    updated_at datetime [default: `now()`, note: "updated time"]
+}
+
+Table foods {
+    id int [pk, increment]
+    name varchar
+}
+
+Table ingredients {
+    id int [pk, increment]
+    name varchar
+    food_id int [ref: > foods.id]
+    created_at datetime [default: `now()`, note: "created time"]
+    updated_at datetime [default: `now()`, note: "updated time"]
+}
+
+Table nutriton_facts {
+    id int [pk, increment]
+    calories float
+    fat float
+    carbs float
+    protein float
+    ingredient_id int [ref: - ingredients.id]
+    created_at datetime [default: `now()`, note: "created time"]
+    updated_at datetime [default: `now()`, note: "updated time"]
+}
+
+Table recipe_ingredients {
+    id int [pk, increment]
+    recipe_id int [ref: > recipes.id]
+    ingredient_id int [ref: > ingredients.id]
+    mesurement float
+}
+
+Table photo_size {
+    id int [pk, increment]
+    name varchar [note: "THUMBNAIL || SMALL || REGULAR || LARGE"]
+    width int [note: "set min && max"]
+    height int [note: "set min && max"]
+    created_at datetime [default: `now()`, note: "created time"]
+    updated_at datetime [default: `now()`, note: "updated time"]
+}
+
+Table photos {
+    id int [pk, increment]
+    url text
+    size_id int [ref: > photo_size.id]
+    recipe_id int [ref: < recipes.id]
+    created_at datetime [default: `now()`, note: "created time"]
+    updated_at datetime [default: `now()`, note: "updated time"]
+}
+
+
+Table users {
+    id int [pk, increment]
+    name varchar
+    created_at datetime [default: `now()`, note: "created time"]
+    updated_at datetime [default: `now()`, note: "updated time"]
+}
+
+Table reviews {
+    id int [pk, increment]
+    post text
+    rating int [note: "null || (>=1 && <=5)"]
+    user_id int [ref: > users.id]
+    recipe_id int [ref: > recipes.id]  
+    created_at datetime [default: `now()`, note: "created time"]
+    updated_at datetime [default: `now()`, note: "updated time"]
+}
+
+Table likes {
+    id int [pk, increment]
+    liked boolean
+    user_id int [ref: > users.id]
+    recipe_id int [ref: > recipes.id]
+}
