@@ -28,7 +28,7 @@ npm install ejs jquery
 
     npx sequelize model:generate --name Ingredient --attributes name:string,foodId:integer
 
-    npx sequelize model:generate --name NutritonFact --attributes calories:float,fat:float,carbs:float,protein:carbs,ingredientId:integer
+    npx sequelize model:generate --name NutritonFact --attributes calories:float,fat:float,carbs:float,protein:float,carbs:float,ingredientId:integer
 
     npx sequelize model:generate --name RecipeIngredient --attributes recipeId:integer,ingredientId:integer,mesurement:float
 
